@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="id" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>BadmintonX - The Art of Shuttle</title>
+    <meta name="description" content="Situs elegan dan modern yang didedikasikan untuk olahraga badminton. Pelajari sejarah, teknik, dan pemain terbaik dunia.">
+    <meta name="keywords" content="badminton, bulutangkis, olahraga, teknik badminton, pemain badminton">
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Konfigurasi Tailwind & Font -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Mengaktifkan mode gelap via class
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'count-up': 'countUp 1.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: 0, transform: 'translateY(30px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS untuk Fitur Tambahan -->
+    <style>
+        /* Mengatur font-smoothing untuk tampilan premium */
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            scroll-behavior: smooth;
+        }
+
+        /* Styling untuk Scrollbar Minimalis */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #2d2d2d;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #555;
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+
+        /* Kelas untuk animasi scroll */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Efek Parallax Sederhana (pada background jika diinginkan) */
+        .hero-section {
+            background-image: url('https://placehold.co/1920x1080/111827/9CA3AF?text=Hero+Image+Badminton');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Ini adalah efek parallax sederhana */
+        }
+        
+        .dark .hero-section {
+             background-image: url('https://placehold.co/1920x1080/000000/374151?text=Hero+Image+Badminton');
+        }
+
+        /* Tombol share sosial media di samping */
+        .social-share-sidebar {
+            position: fixed;
+            top: 50%;
+            left: 1.25rem; /* 20px */
+            transform: translateY(-50%);
+            z-index: 40;
+        }
+
+        @media (max-width: 1024px) {
+            .social-share-sidebar {
+                display: none; /* Sembunyikan di mobile */
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans transition-colors duration-300">
+
+    <!-- ===== 1. HEADER & SIDEBAR (MOBILE NAV) ===== -->
+    <header class="bg-white/90 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 w-full shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="text-2xl font-bold text-blue-600 dark:text-blue-500" data-lang-key="logo">BadmintonX</a>
+
+            <!-- Nav Links (Desktop) -->
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#sejarah" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400" data-lang-key="navHistory">Sejarah</a>
+                <a href="#teknik" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400" data-lang-key="navTechnique">Teknik</a>
+                <a href="#pemain" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400" data-lang-key="navPlayers">Pemain</a>
+                <a href="#galeri" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400" data-lang-key="navGallery">Galeri</a>
+            </div>
+
+            <!-- Kontrol (Search, Lang, Mode, Mobile Toggle) -->
+            <div class="flex items-center space-x-3">
+                <!-- Search Bar -->
+                <div class="hidden sm:block">
+                    <div class="relative">
+                        <input type="text" data-lang-key="searchPlaceholder" placeholder="Cari..." class="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full py-1.5 px-4 pl-10 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all w-32 focus:w-48">
+                        <div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Language Switcher -->
+                <div class="flex items-center space-x-1 border-r border-l border-gray-200 dark:border-gray-700 px-3">
+                    <button id="lang-id" class="text-sm font-semibold text-blue-600 dark:text-blue-400" title="Ganti ke Bahasa Indonesia">ID</button>
+                    <span class="text-gray-300 dark:text-gray-600">|</span>
+                    <button id="lang-en" class="text-sm font-medium text-gray-500 dark:text-gray-400" title="Switch to English">EN</button>
+                </div>
+
+                <!-- Dark Mode Toggle -->
+                <button id="darkModeToggle" class="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800" title="Ganti Mode">
+                    <!-- Ikon Matahari -->
+                    <svg id="sunIcon" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <!-- Ikon Bulan -->
+                    <svg id="moonIcon" class="h-5 w-5 hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+
+                <!-- Mobile Menu Button (Hamburger) -->
+                <button id="mobileMenuButton" class="md:hidden p-2 rounded-md text-gray-600 dark:text-gray-300" title="Menu">
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Sidebar (Mobile Menu) -->
+        <div id="mobileMenu" class="md:hidden fixed inset-y-0 right-0 z-50 w-64 bg-white dark:bg-gray-900 shadow-xl transform translate-x-full transition-transform duration-300 ease-in-out">
+            <div class="flex justify-end p-4">
+                <button id="closeMobileMenu" class="p-2 rounded-md text-gray-600 dark:text-gray-300" title="Tutup Menu">
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="flex flex-col space-y-4 p-6">
+                <a href="#sejarah" class="text-gray-700 dark:text-gray-200 hover:text-blue-600 mobile-nav-link" data-lang-key="navHistory">Sejarah</a>
+                <a href="#teknik" class="text-gray-700 dark:text-gray-200 hover:text-blue-600 mobile-nav-link" data-lang-key="navTechnique">Teknik</a>
+                <a href="#pemain" class="text-gray-700 dark:text-gray-200 hover:text-blue-600 mobile-nav-link" data-lang-key="navPlayers">Pemain</a>
+                <a href="#galeri" class="text-gray-700 dark:text-gray-200 hover:text-blue-600 mobile-nav-link" data-lang-key="navGallery">Galeri</a>
+                <a href="#manfaat" class="text-gray-700 dark:text-gray-200 hover:text-blue-600 mobile-nav-link" data-lang-key="navBenefits">Manfaat</a>
+            </div>
+        </div>
+        <!-- Overlay untuk Mobile Menu -->
+        <div id="mobileMenuOverlay" class="fixed inset-0 z-40 bg-black/50 hidden md:hidden"></div>
+    </header>
+
+    <!-- ===== 2. HERO SECTION ===== -->
+    <section class="hero-section relative min-h-[calc(100vh-68px)] flex items-center justify-center text-center text-white">
+        <!-- Overlay Gelap -->
+        <div class="absolute inset-0 bg-black/60"></div>
+        
+        <div class="relative z-10 p-6 max-w-3xl scroll-animate is-visible">
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-4" data-lang-key="heroTitle">
+                Keanggunan & Kekuatan
+            </h1>
+            <p class="text-lg md:text-xl text-gray-200 mb-8" data-lang-key="heroSubtitle">
+                Temukan dunia badminton yang dinamis, cepat, dan penuh strategi.
+            </p>
+            <a href="#pengertian" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full text-lg transition-transform duration-300 transform hover:scale-105" data-lang-key="heroCTA">
+                Mulai Menjelajah
+            </a>
+        </div>
+        <!-- Indikator Scroll Down -->
+        <div class="absolute bottom-10 z-10 text-white animate-bounce">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+        </div>
+    </section>
+
+    <!-- Konten Utama -->
+    <main class="container mx-auto px-6 py-16 lg:py-24 space-y-20 lg:space-y-32 overflow-x-hidden">
+
+        <!-- ===== 3a. PENGERTIAN BADMINTON ===== -->
+        <section id="pengertian" class="scroll-animate">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl lg:text-4xl font-bold mb-6" data-lang-key="defTitle">
+                    Apa itu Badminton?
+                </h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300" data-lang-key="defContent">
+                    Badminton adalah olahraga raket yang dimainkan menggunakan raket untuk memukul shuttlecock (kok) melewati jaring. Ini adalah olahraga Olimpiade dengan lima kategori: tunggal putra dan putri, ganda putra dan putri, serta ganda campuran.
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== 3c. SEJARAH BADMINTON ===== -->
+        <section id="sejarah" class="scroll-animate">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="pr-0 lg:pr-10">
+                    <h2 class="text-3xl lg:text-4xl font-bold mb-6" data-lang-key="historyTitle">
+                        Sejarah Singkat
+                    </h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-4" data-lang-key="historyContent1">
+                        Permainan ini berkembang di India Britania pada pertengahan abad ke-19 dari permainan sebelumnya 'battledore and shuttlecock'. Versi modernnya, yang dikenal sebagai 'Poona', dibawa kembali ke Inggris oleh perwira militer.
+                    </p>
+                    <p class="text-lg text-gray-600 dark:text-gray-300" data-lang-key="historyContent2">
+                        Klub Badminton Bath menyusun aturan formal pertama pada tahun 1877. Federasi Bulu Tangkis Internasional (IBF), sekarang dikenal sebagai Badminton World Federation (BWF), didirikan pada tahun 1934.
+                    </p>
+                </div>
+                <div>
+                    <img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=Ilustrasi+Sejarah" alt="Ilustrasi Sejarah Badminton" class="rounded-lg shadow-xl w-full h-auto object-cover">
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 2g. COUNTER / STATISTIK ===== -->
+        <section id="statistik" class="bg-gray-100 dark:bg-gray-800 rounded-lg p-10 scroll-animate">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div>
+                    <h3 class="text-4xl lg:text-5xl font-extrabold text-blue-600 dark:text-blue-400 stat-number" data-target="499">0</h3>
+                    <p class="text-lg font-medium mt-2" data-lang-key="stat1">KM/JAM Smash Tercepat</p>
+                </div>
+                <div>
+                    <h3 class="text-4xl lg:text-5xl font-extrabold text-blue-600 dark:text-blue-400 stat-number" data-target="1992">0</h3>
+                    <p class="text-lg font-medium mt-2" data-lang-key="stat2">Tahun Debut Olimpiade</p>
+                </div>
+                <div>
+                    <h3 class="text-4xl lg:text-5xl font-extrabold text-blue-600 dark:text-blue-400 stat-number" data-target="300">0</h3>
+                    <p class="text-lg font-medium mt-2" data-lang-key="stat3">Juta+ Pemain Aktif Global</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 3d. TEKNIK BADMINTON ===== -->
+        <section id="teknik" class="scroll-animate">
+            <h2 class="text-3xl lg:text-4xl font-bold mb-10 text-center" data-lang-key="techTitle">
+                Teknik Dasar
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Card 1: Servis -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    <h3 class="text-2xl font-semibold mb-3" data-lang-key="techServe">Servis</h3>
+                    <p class="text-gray-600 dark:text-gray-300" data-lang-key="techServeDesc">Pukulan awal untuk memulai permainan. Bisa servis tinggi (high serve) atau servis pendek (low serve).</p>
+                </div>
+                <!-- Card 2: Smash -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    <h3 class="text-2xl font-semibold mb-3" data-lang-key="techSmash">Smash</h3>
+                    <p class="text-gray-600 dark:text-gray-300" data-lang-key="techSmashDesc">Pukulan overhead yang kuat dan menukik tajam ke area lawan. Pukulan serangan utama.</p>
+                </div>
+                <!-- Card 3: Drop Shot -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    <h3 class="text-2xl font-semibold mb-3" data-lang-key="techDrop">Drop Shot</h3>
+                    <p class="text-gray-600 dark:text-gray-300" data-lang-key="techDropDesc">Pukulan tipuan yang pelan dan jatuh tipis di dekat net lawan, biasanya dari belakang lapangan.</p>
+                </div>
+                <!-- Card 4: Netting -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    <h3 class="text-2xl font-semibold mb-3" data-lang-key="techNet">Netting</h3>
+                    <p class="text-gray-600 dark:text-gray-300" data-lang-key="techNetDesc">Permainan di dekat net, membutuhkan sentuhan halus agar kok jatuh sedekat mungkin dengan net.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ===== 2h. POPUP VIDEO ===== -->
+        <section class="text-center scroll-animate">
+             <h2 class="text-3xl lg:text-4xl font-bold mb-6" data-lang-key="videoTitle">
+                Lihat Aksi Mereka
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-8" data-lang-key="videoDesc">
+                Tonton beberapa reli dan momen terbaik dalam sejarah badminton modern.
+            </p>
+            <button id="openVideoModal" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full text-lg transition-transform duration-300 transform hover:scale-105 inline-flex items-center">
+                <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <span data-lang-key="videoButton">Putar Video Highlights</span>
+            </button>
+        </section>
+
+        <!-- ===== 3e. JENIS PERMAINAN & 3f. MANFAAT ===== -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start scroll-animate">
+            <!-- Jenis Permainan -->
+            <div>
+                <h2 class="text-3xl lg:text-4xl font-bold mb-6" data-lang-key="typesTitle">
+                    Jenis Permainan
+                </h2>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <svg class="w-6 h-6 text-blue-500 mr-3 flex-shrink-0 mt-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                        <div>
+                            <h4 class="text-xl font-semibold" data-lang-key="typesMS">Tunggal Putra (Men's Singles)</h4>
+                            <p class="text-gray-600 dark:text-gray-300" data-lang-key="typesMSDesc">Satu lawan satu antar pemain pria.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-6 h-6 text-blue-500 mr-3 flex-shrink-0 mt-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        <div>
+                            <h4 class="text-xl font-semibold" data-lang-key="typesWS">Tunggal Putri (Women's Singles)</h4>
+                            <p class="text-gray-600 dark:text-gray-300" data-lang-key="typesWSDesc">Satu lawan satu antar pemain wanita.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                         <svg class="w-6 h-6 text-blue-500 mr-3 flex-shrink-0 mt-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        <div>
+                            <h4 class="text-xl font-semibold" data-lang-key="typesMD">Ganda (Doubles)</h4>
+                            <p class="text-gray-600 dark:text-gray-300" data-lang-key="typesMDDesc">Dua tim (putra, putri, atau campuran) berisi dua pemain saling berhadapan.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- Manfaat -->
+            <div>
+                <h2 class="text-3xl lg:text-4xl font-bold mb-6" data-lang-key="benefitsTitle">
+                    Manfaat Kesehatan
+                </h2>
+                <ul class="space-y-4">
+                    <li class="flex items-center">
+                        <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                        <span class="text-lg" data-lang-key="benefit1">Meningkatkan kesehatan kardiovaskular.</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-4.44a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"></path><path d="M18 2l-2.5 2.5"></path><path d="M15.5 4.5L14 3"></path><path d="M14 11h.01"></path><path d="M14 15h.01"></path><path d="M10 11h.01"></path><path d="M10 15h.01"></path><path d="M18 11h.01"></path><path d="M18 15h.01"></path></svg>
+                        <span class="text-lg" data-lang-key="benefit2">Membakar kalori dan mengurangi stres.</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20a6 6 0 0 0-12 0"></path><path d="M12 14v2"></path><path d="M12 2v8"></path><path d="M12 22v-2"></path><path d="m15 5-1 1"></path><path d="m9 5 1 1"></path><path d="M15 19v-2a3 3 0 0 0-6 0v2"></path></svg>
+                        <span class="text-lg" data-lang-key="benefit3">Meningkatkan kelincahan, refleks, dan keseimbangan.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ===== 3g. PROFIL PEMAIN BADMINTON ===== -->
+        <section id="pemain" class="scroll-animate">
+            <h2 class="text-3xl lg:text-4xl font-bold mb-10 text-center" data-lang-key="playersTitle">
+                Pemain Legendaris
+            </h2>
+            <!-- Horizontal Scroll Wrapper -->
+            <div class="flex overflow-x-auto space-x-8 pb-4 -mx-6 px-6">
+                <!-- Player Card 1 -->
+                <div class="flex-shrink-0 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://placehold.co/400x300/F87171/FFFFFF?text=Pemain+1" alt="Profil Pemain 1" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-2" data-lang-key="player1Name">Viktor Axelsen</h3>
+                        <p class="text-blue-500 font-medium mb-3" data-lang-key="player1Country">Denmark</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm" data-lang-key="player1Desc">Dikenal dengan tinggi badannya yang menjulang dan smash yang kuat, mendominasi tunggal putra.</p>
+                    </div>
+                </div>
+                <!-- Player Card 2 -->
+                <div class="flex-shrink-0 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://placehold.co/400x300/34D399/FFFFFF?text=Pemain+2" alt="Profil Pemain 2" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-2" data-lang-key="player2Name">An Se Young</h3>
+                        <p class="text-blue-500 font-medium mb-3" data-lang-key="player2Country">Korea Selatan</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm" data-lang-key="player2Desc">Bintang muda yang naik daun dengan pertahanan luar biasa dan penempatan yang cerdas.</p>
+                    </div>
+                </div>
+                <!-- Player Card 3 -->
+                <div class="flex-shrink-0 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://placehold.co/400x300/FCD34D/FFFFFF?text=Pemain+3" alt="Profil Pemain 3" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-2" data-lang-key="player3Name">Lin Dan</h3>
+                        <p class="text-blue-500 font-medium mb-3" data-lang-key="player3Country">Tiongkok</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm" data-lang-key="player3Desc">Dianggap sebagai salah satu pemain terhebat sepanjang masa, peraih dua medali emas Olimpiade.</p>
+                    </div>
+                </div>
+                <!-- Player Card 4 -->
+                <div class="flex-shrink-0 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://placehold.co/400x300/A78BFA/FFFFFF?text=Pemain+4" alt="Profil Pemain 4" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-2" data-lang-key="player4Name">Susi Susanti</h3>
+                        <p class="text-blue-500 font-medium mb-3" data-lang-key="player4Country">Indonesia</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm" data-lang-key="player4Desc">Legenda Indonesia, peraih medali emas Olimpiade pertama untuk Indonesia pada tahun 1992.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 3b. GALERI FOTO ===== -->
+        <section id="galeri" class="scroll-animate">
+            <h2 class="text-3xl lg:text-4xl font-bold mb-10 text-center" data-lang-key="galleryTitle">
+                Galeri Momen
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="grid gap-4">
+                    <div><img class="h-auto max-w-full rounded-lg shadow-md hover:shadow-xl transition-shadow" src="https://placehold.co/500x700/60A5FA/FFFFFF?text=Aksi+1" alt="Galeri Badminton 1"></div>
+                    <div><img class="h-auto max-w-full rounded-lg shadow-md hover:shadow-xl transition-shadow" src="https://placehold.co/500x400/34D399/FFFFFF?text=Aksi+2" alt="Galeri Badminton 2"></div>
+                </div>
+                <div class="grid gap-4">
+                    <div><img class="h-auto max-w-full rounded-lg shadow-md hover:shadow-xl transition-shadow" src="https://placehold.co/500x500/FCD34D/FFFFFF?text=Aksi+3" alt="Galeri Badminton 3"></div>
+                    <div><img class="h-auto max-w-full rounded-lg shadow-md hover:shadow-xl transition-shadow" src="https://placehold.co/500x800/F87171/FFFFFF?text=Aksi+4" alt="Galeri Badminton 4"></div>
+                </div>
+                <div class="grid gap-4">
+                    <div><img class="h-auto max-w-full rounded-lg shadow-md hover:shadow-xl transition-shadow" src="https://placehold.co/500x800/F87171/FFFFFF?text=Aksi+5" alt="Galeri Badminton 5"></div>
+                    <div><img class="h-auto max-w-full rounded-lg shadow-md hover:shadow-xl transition-shadow" src="https://placehold.co/500x500/FCD34D/FFFFFF?text=Aksi+6" alt="Galeri Badminton 6"></div>
+                </div>
+                <div class="grid gap-4">
+                    <div><img class="h-auto max-w-full rounded-lg shadow-md hover:shadow-xl transition-shadow" src="https://placehold.co/500x400/34D399/FFFFFF?text=Aksi+7" alt="Galeri Badminton 7"></div>
+                    <div><img class="h-auto max-w-full rounded-lg shadow-md hover:shadow-xl transition-shadow" src="https://placehold.co/500x700/60A5FA/FFFFFF?text=Aksi+8" alt="Galeri Badminton 8"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== 1c. FOOTER ===== -->
+    <footer class="bg-gray-800 dark:bg-gray-950 text-gray-300 pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- Kolom 1: Tentang -->
+                <div>
+                    <h5 class="text-xl font-bold text-white mb-4" data-lang-key="logo">BadmintonX</h5>
+                    <p class="text-gray-400" data-lang-key="footerAbout">
+                        Situs premium yang didedikasikan untuk merayakan keindahan dan intensitas olahraga badminton.
+                    </p>
+                </div>
+                <!-- Kolom 2: Navigasi Cepat -->
+                <div>
+                    <h5 class="text-lg font-semibold text-white mb-4" data-lang-key="footerNav">Navigasi</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#sejarah" class="hover:text-blue-400" data-lang-key="navHistory">Sejarah</a></li>
+                        <li><a href="#teknik" class="hover:text-blue-400" data-lang-key="navTechnique">Teknik</a></li>
+                        <li><a href="#pemain" class="hover:text-blue-400" data-lang-key="navPlayers">Pemain</a></li>
+                        <li><a href="#galeri" class="hover:text-blue-400" data-lang-key="navGallery">Galeri</a></li>
+                    </ul>
+                </div>
+                <!-- Kolom 3: Legal -->
+                <div>
+                    <h5 class="text-lg font-semibold text-white mb-4" data-lang-key="footerLegal">Legal</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-blue-400" data-lang-key="footerPrivacy">Kebijakan Privasi</a></li>
+                        <li><a href="#" class="hover:text-blue-400" data-lang-key="footerTerms">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+                <!-- Kolom 4: Media Sosial -->
+                <div>
+                    <h5 class="text-lg font-semibold text-white mb-4" data-lang-key="footerSocial">Ikuti Kami</h5>
+                    <div class="flex space-x-4">
+                        <a href="#" class="p-2 bg-gray-700 dark:bg-gray-800 rounded-full hover:bg-blue-600 transition-colors" title="Facebook">
+                            <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </a>
+                        <a href="#" class="p-2 bg-gray-700 dark:bg-gray-800 rounded-full hover:bg-blue-600 transition-colors" title="Twitter">
+                            <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                        </a>
+                        <a href="#" class="p-2 bg-gray-700 dark:bg-gray-800 rounded-full hover:bg-blue-600 transition-colors" title="Instagram">
+                            <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 dark:border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
+                <p>&copy; <span id="currentYear"></span> BadmintonX. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ===== 3i. TOMBOL SHARE SOSIAL MEDIA (SIDEBAR) ===== -->
+    <div class="social-share-sidebar flex flex-col space-y-3">
+        <a href="#" class="p-3 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all" title="Bagikan ke Facebook">
+            <svg class="w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        </a>
+        <a href="#" class="p-3 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all" title="Bagikan ke Twitter">
+            <svg class="w-5 h-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+        </a>
+        <a href="#" class="p-3 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all" title="Bagikan ke LinkedIn">
+            <svg class="w-5 h-5 text-blue-700" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+        </a>
+    </div>
+
+    <!-- ===== 2c. CHATBOT / LIVE CHAT (UI STUB) ===== -->
+    <div class="fixed bottom-6 right-6 z-40">
+        <button id="chatToggleButton" class="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-transform transform hover:scale-105" title="Mulai Chat">
+            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </button>
+        <!-- Chat Window -->
+        <div id="chatWindow" class="hidden absolute bottom-20 right-0 w-80 h-96 bg-white dark:bg-gray-800 rounded-lg shadow-2xl flex flex-col">
+            <div class="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
+                <h4 class="font-semibold" data-lang-key="chatTitle">Butuh Bantuan?</h4>
+                <button id="closeChatButton" class="text-white">&times;</button>
+            </div>
+            <div class="flex-1 p-4 overflow-y-auto text-sm space-y-3">
+                <div class="bg-gray-100 dark:bg-gray-700 p-2 rounded-lg max-w-xs" data-lang-key="chatWelcome">
+                    Halo! Ada yang bisa kami bantu seputar badminton?
+                </div>
+            </div>
+            <div class="p-3 border-t border-gray-200 dark:border-gray-700">
+                <input type="text" data-lang-key="chatPlaceholder" placeholder="Ketik pesan Anda..." class="w-full text-sm bg-gray-100 dark:bg-gray-700 border-none rounded-full py-2 px-4 focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+        </div>
+    </div>
+    
+    <!-- ===== MODAL UNTUK VIDEO POPUP ===== -->
+    <div id="videoModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="relative w-full max-w-3xl bg-black rounded-lg shadow-2xl">
+            <button id="closeVideoModal" class="absolute -top-4 -right-4 z-10 bg-white dark:bg-gray-800 text-gray-800 dark:text-white rounded-full p-1 shadow-lg">
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <!-- Konten Video -->
+            <div class="aspect-video">
+                <!-- Gunakan placeholder atau embed YouTube/Vimeo asli -->
+                <!-- <iframe class="w-full h-full" src="https..." title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                <div class="w-full h-full bg-gray-900 flex items-center justify-center text-white rounded-lg">
+                    <span data-lang-key="videoPlaceholder">(Video Player Placeholder)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ===== JAVASCRIPT UTAMA ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // ===== 2f. ANALYTICS INTEGRATION (MOCK) =====
+            function trackEvent(eventName, eventCategory, eventLabel) {
+                // Ganti ini dengan kode analytics Anda (Google Analytics, Plausible, dll.)
+                console.log(`Analytics Event: ${eventName}`, {
+                    category: eventCategory,
+                    label: eventLabel
+                });
+                // Contoh:
+                // if (typeof gtag === 'function') {
+                //     gtag('event', eventName, { 'event_category': eventCategory, 'event_label': eventLabel });
+                // }
+            }
+            // Lacak Page View saat load
+            trackEvent('page_view', 'General', window.location.pathname);
+
+
+            // ===== 3j. DARK MODE TOGGLE =====
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            const html = document.documentElement;
+
+            // Cek preferensi tersimpan atau preferensi sistem
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                html.classList.add('dark');
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            } else {
+                html.classList.remove('dark');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            }
+
+            darkModeToggle.addEventListener('click', () => {
+                if (html.classList.contains('dark')) {
+                    html.classList.remove('dark');
+                    localStorage.theme = 'light';
+                    moonIcon.classList.add('hidden');
+                    sunIcon.classList.remove('hidden');
+                    trackEvent('toggle_dark_mode', 'UI', 'light');
+                } else {
+                    html.classList.add('dark');
+                    localStorage.theme = 'dark';
+                    moonIcon.classList.remove('hidden');
+                    sunIcon.classList.add('hidden');
+                    trackEvent('toggle_dark_mode', 'UI', 'dark');
+                }
+            });
+
+
+            // ===== 1d. SIDEBAR (MOBILE MENU) LOGIC =====
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const closeMobileMenu = document.getElementById('closeMobileMenu');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+            const openMenu = () => {
+                mobileMenu.classList.remove('translate-x-full');
+                mobileMenuOverlay.classList.remove('hidden');
+            };
+            
+            const closeMenu = () => {
+                mobileMenu.classList.add('translate-x-full');
+                mobileMenuOverlay.classList.add('hidden');
+            };
+
+            mobileMenuButton.addEventListener('click', openMenu);
+            closeMobileMenu.addEventListener('click', closeMenu);
+            mobileMenuOverlay.addEventListener('click', closeMenu);
+            mobileNavLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+
+            // ===== 2b. SCROLL ANIMATION (FADE-IN) =====
+            const scrollElements = document.querySelectorAll('.scroll-animate');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // Optional: unobserve setelah animasi
+                        // observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1 // Triger saat 10% elemen terlihat
+            });
+
+            scrollElements.forEach(el => observer.observe(el));
+
+
+            // ===== 2g. COUNTER / STATISTIK ANIMATION =====
+            const statNumbers = document.querySelectorAll('.stat-number');
+            let statsAnimated = false;
+
+            const animateStat = (el) => {
+                const target = +el.getAttribute('data-target');
+                let current = 0;
+                const increment = target / 100; // 100 langkah animasi
+
+                const updateCount = () => {
+                    current += increment;
+                    if (current < target) {
+                        el.innerText = Math.ceil(current).toLocaleString('id-ID');
+                        requestAnimationFrame(updateCount);
+                    } else {
+                        el.innerText = target.toLocaleString('id-ID');
+                    }
+                };
+                updateCount();
+            };
+
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !statsAnimated) {
+                        statNumbers.forEach(animateStat);
+                        statsAnimated = true; // Hanya animasi sekali
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.5
+            });
+
+            const statsSection = document.getElementById('statistik');
+            if (statsSection) {
+                statsObserver.observe(statsSection);
+            }
+
+
+            // ===== 2c. CHATBOT TOGGLE =====
+            const chatToggleButton = document.getElementById('chatToggleButton');
+            const chatWindow = document.getElementById('chatWindow');
+            const closeChatButton = document.getElementById('closeChatButton');
+            
+            chatToggleButton.addEventListener('click', () => {
+                chatWindow.classList.toggle('hidden');
+                trackEvent('toggle_chat', 'UI', 'open');
+            });
+            closeChatButton.addEventListener('click', () => {
+                chatWindow.classList.add('hidden');
+            });
+
+
+            // ===== 2h. VIDEO POPUP MODAL =====
+            const openVideoModal = document.getElementById('openVideoModal');
+            const videoModal = document.getElementById('videoModal');
+            const closeVideoModal = document.getElementById('closeVideoModal');
+
+            openVideoModal.addEventListener('click', () => {
+                videoModal.classList.remove('hidden');
+                videoModal.classList.add('flex');
+                trackEvent('open_video_modal', 'Media', 'Highlights');
+            });
+
+            const closeModal = () => {
+                videoModal.classList.add('hidden');
+                videoModal.classList.remove('flex');
+                // Tambahkan logic untuk stop video (jika pakai YouTube API)
+            };
+
+            closeVideoModal.addEventListener('click', closeModal);
+            videoModal.addEventListener('click', (e) => {
+                if (e.target === videoModal) {
+                    closeModal(); // Tutup jika klik di luar konten modal
+                }
+            });
+
+
+            // ===== 3h. MULTI-BAHASA (LANGUAGE SWITCHER) =====
+            const langBtnId = document.getElementById('lang-id');
+            const langBtnEn = document.getElementById('lang-en');
+            
+            const langData = {
+                "id": {
+                    "logo": "BadmintonX",
+                    "navHistory": "Sejarah",
+                    "navTechnique": "Teknik",
+                    "navPlayers": "Pemain",
+                    "navGallery": "Galeri",
+                    "navBenefits": "Manfaat",
+                    "searchPlaceholder": "Cari...",
+                    "heroTitle": "Keanggunan & Kekuatan",
+                    "heroSubtitle": "Temukan dunia badminton yang dinamis, cepat, dan penuh strategi.",
+                    "heroCTA": "Mulai Menjelajah",
+                    "defTitle": "Apa itu Badminton?",
+                    "defContent": "Badminton adalah olahraga raket yang dimainkan menggunakan raket untuk memukul shuttlecock (kok) melewati jaring. Ini adalah olahraga Olimpiade dengan lima kategori: tunggal putra dan putri, ganda putra dan putri, serta ganda campuran.",
+                    "historyTitle": "Sejarah Singkat",
+                    "historyContent1": "Permainan ini berkembang di India Britania pada pertengahan abad ke-19 dari permainan sebelumnya 'battledore and shuttlecock'. Versi modernnya, yang dikenal sebagai 'Poona', dibawa kembali ke Inggris oleh perwira militer.",
+                    "historyContent2": "Klub Badminton Bath menyusun aturan formal pertama pada tahun 1877. Federasi Bulu Tangkis Internasional (IBF), sekarang dikenal sebagai Badminton World Federation (BWF), didirikan pada tahun 1934.",
+                    "stat1": "KM/JAM Smash Tercepat",
+                    "stat2": "Tahun Debut Olimpiade",
+                    "stat3": "Juta+ Pemain Aktif Global",
+                    "techTitle": "Teknik Dasar",
+                    "techServe": "Servis",
+                    "techServeDesc": "Pukulan awal untuk memulai permainan. Bisa servis tinggi (high serve) atau servis pendek (low serve).",
+                    "techSmash": "Smash",
+                    "techSmashDesc": "Pukulan overhead yang kuat dan menukik tajam ke area lawan. Pukulan serangan utama.",
+                    "techDrop": "Drop Shot",
+                    "techDropDesc": "Pukulan tipuan yang pelan dan jatuh tipis di dekat net lawan, biasanya dari belakang lapangan.",
+                    "techNet": "Netting",
+                    "techNetDesc": "Permainan di dekat net, membutuhkan sentuhan halus agar kok jatuh sedekat mungkin dengan net.",
+                    "videoTitle": "Lihat Aksi Mereka",
+                    "videoDesc": "Tonton beberapa reli dan momen terbaik dalam sejarah badminton modern.",
+                    "videoButton": "Putar Video Highlights",
+                    "videoPlaceholder": "(Video Player Placeholder)",
+                    "typesTitle": "Jenis Permainan",
+                    "typesMS": "Tunggal Putra",
+                    "typesMSDesc": "Satu lawan satu antar pemain pria.",
+                    "typesWS": "Tunggal Putri",
+                    "typesWSDesc": "Satu lawan satu antar pemain wanita.",
+                    "typesMD": "Ganda (Doubles)",
+                    "typesMDDesc": "Dua tim (putra, putri, atau campuran) berisi dua pemain saling berhadapan.",
+                    "benefitsTitle": "Manfaat Kesehatan",
+                    "benefit1": "Meningkatkan kesehatan kardiovaskular.",
+                    "benefit2": "Membakar kalori dan mengurangi stres.",
+                    "benefit3": "Meningkatkan kelincahan, refleks, dan keseimbangan.",
+                    "playersTitle": "Pemain Legendaris",
+                    "player1Name": "Viktor Axelsen", "player1Country": "Denmark", "player1Desc": "Dikenal dengan tinggi badannya yang menjulang dan smash yang kuat, mendominasi tunggal putra.",
+                    "player2Name": "An Se Young", "player2Country": "Korea Selatan", "player2Desc": "Bintang muda yang naik daun dengan pertahanan luar biasa dan penempatan yang cerdas.",
+                    "player3Name": "Lin Dan", "player3Country": "Tiongkok", "player3Desc": "Dianggap sebagai salah satu pemain terhebat sepanjang masa, peraih dua medali emas Olimpiade.",
+                    "player4Name": "Susi Susanti", "player4Country": "Indonesia", "player4Desc": "Legenda Indonesia, peraih medali emas Olimpiade pertama untuk Indonesia pada tahun 1992.",
+                    "galleryTitle": "Galeri Momen",
+                    "footerAbout": "Situs premium yang didedikasikan untuk merayakan keindahan dan intensitas olahraga badminton.",
+                    "footerNav": "Navigasi",
+                    "footerLegal": "Legal",
+                    "footerPrivacy": "Kebijakan Privasi",
+                    "footerTerms": "Syarat & Ketentuan",
+                    "footerSocial": "Ikuti Kami",
+                    "chatTitle": "Butuh Bantuan?",
+                    "chatWelcome": "Halo! Ada yang bisa kami bantu seputar badminton?",
+                    "chatPlaceholder": "Ketik pesan Anda...",
+                },
+                "en": {
+                    "logo": "BadmintonX",
+                    "navHistory": "History",
+                    "navTechnique": "Techniques",
+                    "navPlayers": "Players",
+                    "navGallery": "Gallery",
+                    "navBenefits": "Benefits",
+                    "searchPlaceholder": "Search...",
+                    "heroTitle": "Elegance & Power",
+                    "heroSubtitle": "Discover the dynamic, fast-paced, and strategic world of badminton.",
+                    "heroCTA": "Start Exploring",
+                    "defTitle": "What is Badminton?",
+                    "defContent": "Badminton is a racquet sport played using racquets to hit a shuttlecock across a net. It is an Olympic sport with five categories: men's and women's singles, men's and women's doubles, and mixed doubles.",
+                    "historyTitle": "Brief History",
+                    "historyContent1": "The game developed in British India in the mid-19th century from the earlier game 'battledore and shuttlecock'. The modern version, 'Poona', was brought back to England by military officers.",
+                    "historyContent2": "The Bath Badminton Club drew up the first formal rules in 1877. The International Badminton Federation (IBF), now the Badminton World Federation (BWF), was established in 1934.",
+                    "stat1": "KPH Fastest Smash",
+                    "stat2": "Olympic Debut Year",
+                    "stat3": "Million+ Active Players Globally",
+                    "techTitle": "Basic Techniques",
+                    "techServe": "Serve",
+                    "techServeDesc": "The initial shot to start a rally. Can be a high serve or a low serve.",
+                    "techSmash": "Smash",
+                    "techSmashDesc": "A powerful overhead shot that is hit steeply downwards into the opponent's court.",
+                    "techDrop": "Drop Shot",
+                    "techDropDesc": "A soft, deceptive shot that falls just over the net, usually from the backcourt.",
+                    "techNet": "Netting",
+                    "techNetDesc": "Play near the net, requiring a delicate touch to make the shuttlecock fall as close as possible.",
+                    "videoTitle": "See Them In Action",
+                    "videoDesc": "Watch some of the best rallies and moments in modern badminton history.",
+                    "videoButton": "Play Highlights Video",
+                    "videoPlaceholder": "(Video Player Placeholder)",
+                    "typesTitle": "Game Types",
+                    "typesMS": "Men's Singles",
+                    "typesMSDesc": "One-on-one match between male players.",
+                    "typesWS": "Women's Singles",
+                    "typesWSDesc": "One-on-one match between female players.",
+                    "typesMD": "Doubles",
+                    "typesMDDesc": "Two teams (men, women, or mixed) of two players face each other.",
+                    "benefitsTitle": "Health Benefits",
+                    "benefit1": "Improves cardiovascular health.",
+                    "benefit2": "Burns calories and reduces stress.",
+                    "benefit3": "Enhances agility, reflexes, and balance.",
+                    "playersTitle": "Legendary Players",
+                    "player1Name": "Viktor Axelsen", "player1Country": "Denmark", "player1Desc": "Known for his towering height and powerful smash, dominating the men's singles.",
+                    "player2Name": "An Se Young", "player2Country": "South Korea", "player2Desc": "A rising young star with incredible defense and intelligent placement.",
+                    "player3Name": "Lin Dan", "player3Country": "China", "player3Desc": "Widely regarded as one of the greatest players of all time, a two-time Olympic gold medalist.",
+                    "player4Name": "Susi Susanti", "player4Country": "Indonesia", "player4Desc": "An Indonesian legend, winning the first-ever Olympic gold medal for Indonesia in 1992.",
+                    "galleryTitle": "Gallery of Moments",
+                    "footerAbout": "A premium site dedicated to celebrating the beauty and intensity of the sport of badminton.",
+                    "footerNav": "Navigation",
+                    "footerLegal": "Legal",
+                    "footerPrivacy": "Privacy Policy",
+                    "footerTerms": "Terms & Conditions",
+                    "footerSocial": "Follow Us",
+                    "chatTitle": "Need Help?",
+                    "chatWelcome": "Hello! How can we help you with badminton today?",
+                    "chatPlaceholder": "Type your message...",
+                }
+            };
+            
+            const setLanguage = (lang) => {
+                document.documentElement.lang = lang;
+                const elements = document.querySelectorAll('[data-lang-key]');
+                elements.forEach(el => {
+                    const key = el.getAttribute('data-lang-key');
+                    const text = langData[lang][key];
+                    if (text) {
+                        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                            el.placeholder = text;
+                        } else {
+                            el.innerText = text;
+                        }
+                    }
+                });
+                
+                // Update tombol aktif
+                if (lang === 'id') {
+                    langBtnId.classList.add('text-blue-600', 'dark:text-blue-400', 'font-semibold');
+                    langBtnId.classList.remove('text-gray-500', 'dark:text-gray-400', 'font-medium');
+                    langBtnEn.classList.add('text-gray-500', 'dark:text-gray-400', 'font-medium');
+                    langBtnEn.classList.remove('text-blue-600', 'dark:text-blue-400', 'font-semibold');
+                } else {
+                    langBtnEn.classList.add('text-blue-600', 'dark:text-blue-400', 'font-semibold');
+                    langBtnEn.classList.remove('text-gray-500', 'dark:text-gray-400', 'font-medium');
+                    langBtnId.classList.add('text-gray-500', 'dark:text-gray-400', 'font-medium');
+                    langBtnId.classList.remove('text-blue-600', 'dark:text-blue-400', 'font-semibold');
+                }
+                
+                trackEvent('switch_language', 'UI', lang);
+            };
+
+            langBtnId.addEventListener('click', () => setLanguage('id'));
+            langBtnEn.addEventListener('click', () => setLanguage('en'));
+
+            // Set bahasa awal
+            setLanguage('id');
+
+
+            // ===== FOOTER TAHUN OTOMATIS =====
+            document.getElementById('currentYear').innerText = new Date().getFullYear();
+
+        });
+    </script>
+
+</body>
+</html>
